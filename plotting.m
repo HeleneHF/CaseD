@@ -28,34 +28,39 @@ plot(eta_d(1,:),eta_d(2,:), 'ro');
 axis([-5,15,-5,15])
 legend('desired position or path')
 
+
+if true
+    h = animatedline;
+    for k = 1:length(eta(1,:))
+        addpoints(h,eta(1,k),eta(2,k));
+        if mod(k, 10000) == 0
+            drawnow;
+            pause(0.01);
+        end
+    end
+end
+    
 figure;
 plot(simout.time, simout.data(:,3)*180/pi);
 hold on;
 plot(simout.time, eta_d(3,:)*180/pi);
 plot(simout.time, eta(3,:)*180/pi);
-%%legend('d/dt psi_d', 'psi_d', 'psi');
+axis([0,600,-200,200])
+legend('d/dt psi_d', 'psi_d', 'psi');
 pause;
 
-    h = animatedline;
 
-for k = 1:length(eta(1,:))
-    addpoints(h,eta(1,k),eta(2,k));
-    if mod(k, 1000) == 0
-        drawnow;
-        pause(0.01);
-    end
-end
 
 % Desired vs measured x-dir
 figure
-plot(t,eta_d(1,:),'b',t,eta(1,:),'r',t,ones(size(t))*10,'--')
-axis([0,500,0,25])
-legend('Desired path','measured position','desired end point')
+plot(t,eta_d(1,:),'b',t,eta(1,:),'r')
+axis([0,inf,0,25])
+legend('Desired path','measured position')
 title('Desired path x-direction')
 
 % Desired vs measured y-dir
 figure
-plot(t,eta_d(2,:),'b',t,eta(2,:),'r',t,ones(size(t))*4,'--')
+plot(t,eta_d(2,:),'b',t,eta(2,:),'r')
 axis([0,500,-inf,inf])
-legend('Desired path','measured position','desired end point')
+legend('Desired path','measured position')
 title('Desired path y-direction')
