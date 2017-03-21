@@ -1,4 +1,23 @@
 close all;
+
+eta = output(:,1:3);
+eta_d = output(:,4:6);
+
+figure;
+
+plot(eta_d(:,1),eta_d(:,2), 'ro');
+
+h = animatedline;
+for k = 1:length(output(:,1))
+    addpoints(h,output(k,1),output(k,2));
+    if mod(k, 100) == 0
+        drawnow;
+        pause(0.01);
+    end
+end
+
+% Keep this?
+if false
 % Define figure size
 width = 10; % cm
 height = 10; % cm
@@ -64,3 +83,4 @@ plot(t,eta_d(2,:),'b',t,eta(2,:),'r')
 axis([0,500,-inf,inf])
 legend('Desired path','measured position')
 title('Desired path y-direction')
+end
