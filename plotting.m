@@ -5,34 +5,56 @@ eta_d = output(:,4:6);
 s = output(:,7);
 
 figure;
-plot(0:dt:time, s);
+subplot(311);
+title('x compared to x_d');
+plot(0:dt:time, eta(:, 1))
 hold on;
-plot(0:dt:time, eta_d(:,3));
-
-figure;
-plot(0:dt:time, eta(:,3)*180/pi)
-hold on;
-plot(0:dt:time, eta_d(:,3)*180/pi);
-plot(0:dt:time, s)
-legend('\psi', '\psi_d', 's');
-
-figure;
-plot(0:dt:time, eta(:,1))
-hold on;
-plot(0:dt:time, eta_d(:,1));
+plot(0:dt:time, eta_d(:, 1));
 legend('x', 'x_d');
+xlabel('time');
+ylabel('meters');
+
+subplot(312);
+title('y compared to y_d');
+plot(0:dt:time, eta(:, 2))
+hold on;
+plot(0:dt:time, eta_d(:, 2));
+legend('y', 'y_d');
+xlabel('time');
+ylabel('meters');
+
+subplot(313);
+title('\psi compared to \psi_d');
+plot(0:dt:time, eta(:, 3)*180/pi)
+hold on;
+plot(0:dt:time, eta_d(:, 3)*180/pi);
+legend('\psi', '\psi_d');
+xlabel('time');
+ylabel('angle (degrees)');
+print(['Idealized and real x,y,psi µ=', num2str(mu)], '-deps');
 
 figure;
 plot(eta_d(:,1),eta_d(:,2), 'ro');
+hold on;
 h = animatedline;
+old = [output(1,1); output(1,2)];
 for k = 1:length(output(:,1))
     addpoints(h,output(k,1),output(k,2));
-    if mod(k, 10000) == 0
+    if mod(k, 1000) == 0
+        new = [output(k,1); output(k,2)];
+        diff = new - old;
+        if mod(k, 2000) == 0
+            quiver(old(1), old(2), diff(1), diff(2), 'LineWidth', 4, 'MaxHeadSize', 4);
+        end
+        old = [output(k,1); output(k,2)];
+    end
+    if mod(k, 4000) == 0
         drawnow;
         pause(0.01);
     end
 end
 drawnow;
+print(['Path µ=', num2str(mu)], '-deps');
 
 % Keep this?
 if false
