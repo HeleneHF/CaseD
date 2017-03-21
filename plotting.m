@@ -1,5 +1,7 @@
 close all;
 
+outname = '4-1: ';
+
 eta = output(:,1:3);
 eta_d = output(:,4:6);
 s = output(:,7);
@@ -13,6 +15,7 @@ plot(0:dt:time, eta_d(:, 1));
 legend('x', 'x_d');
 xlabel('time');
 ylabel('meters');
+title([outname 'Idealized and real x,y,psi µ=', num2str(mu)]);
 
 subplot(312);
 title('y compared to y_d');
@@ -31,12 +34,12 @@ plot(0:dt:time, eta_d(:, 3)*180/pi);
 legend('\psi', '\psi_d');
 xlabel('time');
 ylabel('angle (degrees)');
-print(['Idealized and real x,y,psi µ=', num2str(mu)], '-deps');
+saveas(gcf, [outname 'Idealized and real x,y,psi µ=', num2str(mu) '.epsc']);
 
 figure;
-plot(eta_d(:,1),eta_d(:,2), 'ro');
+plot(eta_d(:,1),eta_d(:,2), 'Color', 'Red', 'LineWidth', 5);
 hold on;
-h = animatedline;
+h = animatedline('Color', 'Black');
 old = [output(1,1); output(1,2)];
 for k = 1:length(output(:,1))
     addpoints(h,output(k,1),output(k,2));
@@ -44,7 +47,7 @@ for k = 1:length(output(:,1))
         new = [output(k,1); output(k,2)];
         diff = new - old;
         if mod(k, 2000) == 0
-            quiver(old(1), old(2), diff(1), diff(2), 'LineWidth', 4, 'MaxHeadSize', 4);
+            quiver(old(1), old(2), diff(1), diff(2), 'LineWidth', 4, 'MaxHeadSize', 4, 'Color', 'Magenta');
         end
         old = [output(k,1); output(k,2)];
     end
@@ -54,7 +57,8 @@ for k = 1:length(output(:,1))
     end
 end
 drawnow;
-print(['Path µ=', num2str(mu)], '-deps');
+title([outname 'Path µ=', num2str(mu)]);
+saveas(gcf, [outname 'Path µ=', num2str(mu) '.epsc']);
 
 % Keep this?
 if false
