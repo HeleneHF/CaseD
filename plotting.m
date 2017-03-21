@@ -2,19 +2,37 @@ close all;
 
 eta = output(:,1:3);
 eta_d = output(:,4:6);
+s = output(:,7);
 
 figure;
+plot(0:dt:time, s);
+hold on;
+plot(0:dt:time, eta_d(:,3));
 
+figure;
+plot(0:dt:time, eta(:,3)*180/pi)
+hold on;
+plot(0:dt:time, eta_d(:,3)*180/pi);
+plot(0:dt:time, s)
+legend('\psi', '\psi_d', 's');
+
+figure;
+plot(0:dt:time, eta(:,1))
+hold on;
+plot(0:dt:time, eta_d(:,1));
+legend('x', 'x_d');
+
+figure;
 plot(eta_d(:,1),eta_d(:,2), 'ro');
-
 h = animatedline;
 for k = 1:length(output(:,1))
     addpoints(h,output(k,1),output(k,2));
-    if mod(k, 100) == 0
+    if mod(k, 10000) == 0
         drawnow;
         pause(0.01);
     end
 end
+drawnow;
 
 % Keep this?
 if false
