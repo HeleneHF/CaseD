@@ -1,6 +1,6 @@
 % Case D
 for mu_n = [0 0.1 1 10]
-    time = 100;
+    time = 401;
     dt = 0.01;
     points = length(0:dt:time);
     % Parameters
@@ -11,6 +11,7 @@ for mu_n = [0 0.1 1 10]
     U_ref = [(0:dt:time)' [zeros(floor(1*points/6),1);
                            ones(ceil(4*points/6),1)*0.1;
                            zeros(floor(1*points/6)+1,1)]];  % Case 1
+    U_ref = 0.1;
     U_max = 1;
     r = [5; 3];
     C = [6; 0];
