@@ -1,6 +1,6 @@
 close all;
 
-outname = '4-3: ';
+outname = '4-1: ';
 
 eta = output(:,1:3);
 eta_d = output(:,4:6);

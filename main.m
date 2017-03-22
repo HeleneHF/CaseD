@@ -1,10 +1,10 @@
 % Case D
 for mu_n = [0 0.1 1 10]
-    time = 401;
+    time = 130;
     dt = 0.01;
     points = length(0:dt:time);
     % Parameters
-    K_p = diag([0.2,0.2,0.1]);
+    K_p = diag([0.2, 0.2, 0.1]);
     mu = mu_n;
     P_d = [2  0; 
            10 4];
@@ -12,7 +12,7 @@ for mu_n = [0 0.1 1 10]
                            ones(ceil(4*points/6),1)*0.1;
                            zeros(floor(1*points/6)+1,1)]];  % Case 1
     U_ref = 0.1;
-    U_max = 1;
+    U_max = 2.5;
     r = [5; 3];
     C = [6; 0];
     initial_eta = [1 0 0]';
